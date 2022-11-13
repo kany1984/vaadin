@@ -1,4 +1,4 @@
-package com.example.application.views;
+package com.example.application.views.grid;
 
 import com.example.application.entity.Company;
 import com.example.application.entity.Contact;
@@ -74,8 +74,8 @@ public class ContactForm extends FormLayout {
         cancel.addClickShortcut(Key.ESCAPE);
 
         save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> fireEvent(new ContactForm.DeleteEvent(this, contact)));
-        cancel.addClickListener(event -> fireEvent(new ContactForm.CloseEvent(this)));
+        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, contact)));
+        cancel.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
         //Habilita el boton de guardar solo si el binder es correcto. Si todos los validadores se cumplen
         binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
@@ -86,7 +86,7 @@ public class ContactForm extends FormLayout {
         try {
             //Escribe/actualiza los datos del contacto en el formulario original
             binder.writeBean(contact);
-            fireEvent(new ContactForm.SaveEvent(this, contact));
+            fireEvent(new SaveEvent(this, contact));
         } catch (ValidationException e) {
             e.printStackTrace();
         }
